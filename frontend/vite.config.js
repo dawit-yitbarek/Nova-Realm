@@ -10,32 +10,29 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['buffer'],
-  }, 
+  },
   define: {
-    // Some shims need `global` defined
     global: 'globalThis',
   },
   plugins: [
     tailwindcss(),
-    // Inject Node.js polyfills in both dev and build
     {
       ...rollupNodePolyFill(),
       enforce: 'post',
     },
   ],
   server: {
-    host: '0.0.0.0', // Needed for local testing
+    host: '0.0.0.0'
   },
   preview: {
     allowedHosts: ['0.0.0.0'],
   },
   build: {
-      outDir: 'dist',
-      rollupOptions: {
-        plugins: [
-          // Also apply polyfills during the production build
-          rollupNodePolyFill(),
-        ],
-      },
+    outDir: 'dist',
+    rollupOptions: {
+      plugins: [
+        rollupNodePolyFill(),
+      ],
     },
+  },
 });
