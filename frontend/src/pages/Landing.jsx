@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Footer from "./Footer";
-import checkAndRefreshToken from "./CheckRegistration";
-import LoadingSpinner from "./LoadingSpinner"
-import api from "./Api";
-
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
+import Footer from "../components/Footer";
+import checkAndRefreshToken from "../components/CheckRegistration";
+import LoadingSpinner from "../components/LoadingSpinner"
 
 function Landing() {
   const navigate = useNavigate();
@@ -52,8 +49,8 @@ function Landing() {
             className="h-10 w-10 rounded-full object-cover"
           />
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide orbitron-font bg-gradient-to-r from-purple-400 to-indigo-500 bg-clip-text text-transparent">
-          Nova Realm
-        </h1>
+            Nova Realm
+          </h1>
         </Link>
 
 

@@ -1,8 +1,4 @@
 import React from "react";
-// Skeleton element for placeholder
-// export const skeleton = () => (
-//   <span className="inline-block h-4 w-full max-w-md bg-gray-700 rounded animate-pulse mx-auto" />
-// );
 
 const skeleton = "---"
 
@@ -51,24 +47,24 @@ function leaderboadrProvider(len, type) {
     for (let i = 0; i < len; i++) {
         if (type === "topThree") {
             leaderboard.push(
-            {
-                id: i,
-                avatar_url: "/img/fallback.png",
-                name: skeleton,
-                point: skeleton,
-                rank: i+1
-            }
-        )
-        }else if(type === "others"){
+                {
+                    id: i,
+                    avatar_url: "/img/fallback.png",
+                    name: skeleton,
+                    point: skeleton,
+                    rank: i + 1
+                }
+            )
+        } else if (type === "others") {
             leaderboard.push(
-            {
-                id: i,
-                avatar_url: "/img/fallback.png",
-                name: skeleton,
-                point: skeleton,
-                rank: i+4
-            }
-        )
+                {
+                    id: i,
+                    avatar_url: "/img/fallback.png",
+                    name: skeleton,
+                    point: skeleton,
+                    rank: i + 4
+                }
+            )
         }
 
     }

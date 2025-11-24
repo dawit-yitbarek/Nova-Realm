@@ -1,7 +1,5 @@
 import api from './Api';
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 import { jwtDecode } from "jwt-decode";
-
 
 const isAccessTokenExpired = (accessToken) => {
   try {
@@ -19,10 +17,10 @@ const checkAndRefreshToken = async () => {
   const accessToken = localStorage.getItem("accessToken");
   const isExpired = isAccessTokenExpired(accessToken)
 
-  if ( !accessToken || isExpired) {
+  if (!accessToken || isExpired) {
     try {
       // Call backend to refresh token
-      const response = await api.post(`${BackEndUrl}/refresh`);
+      const response = await api.post(`/refresh`);
 
       const data = await response.data;
       if (data.newAccessToken) {
@@ -41,6 +39,6 @@ const checkAndRefreshToken = async () => {
   return true;
 };
 
-export default checkAndRefreshToken ;
+export default checkAndRefreshToken;
 
 

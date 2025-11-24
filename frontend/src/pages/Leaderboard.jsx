@@ -1,11 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "./Header";
-import api from './Api';
-import Footer from "./Footer";
-import {leaderboardPlaceholder} from "./PlaceholderProvider";
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
+import Header from "../components/Header";
+import api from '../components/Api';
+import Footer from "../components/Footer";
+import { leaderboardPlaceholder } from "../components/PlaceholderProvider";
 
 function Leaderboard() {
   const navigate = useNavigate();
@@ -17,7 +15,7 @@ function Leaderboard() {
     async function fetchLeaderboard() {
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const response = await api.get(`${BackEndUrl}/leaderboard`, {
+        const response = await api.get(`/leaderboard`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         if (response.data?.success) {
@@ -57,8 +55,8 @@ function Leaderboard() {
               <article
                 key={user.id}
                 className={`w-full h-64 rounded-xl flex flex-col items-center justify-center px-4 py-6 bg-[#1a1a2e] text-center ${user.rank == 1
-                    ? "sm:col-span-2 md:col-span-1 order-1"
-                    : "order-2"
+                  ? "sm:col-span-2 md:col-span-1 order-1"
+                  : "order-2"
                   }`}
               >
                 <div className="w-20 h-20 rounded-full overflow-hidden mb-3 border-4 border-purple-500">

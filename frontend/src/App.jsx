@@ -1,20 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import WalletProviderComponent from "./WalletProvider";
-import Signin from "./Signin";
-import Register from "./Register";
-import Landing from "./Landing";
-import Dashboard from './Dashboard'
-import Tasks from './Tasks';
-import Leaderboard from './Leaderboard';
-import ForgotPassword from './ForgotPassword';
-import AuthRedirect from './AuthRedirect';
-import NotFound from './Notfound';
-import Terms from './Terms';
-import Privacy from './Privacy';
-import TelegramRedirect from "./TelegramRedirect"
-import Ping from './Ping'
-import PhantomRedirect from './PhantomRedirect';
+import WalletProviderComponent from "./components/WalletProvider";
+import Signin from "./pages/Signin";
+import Register from "./pages/Register";
+import Landing from "./pages/Landing";
+import Dashboard from './pages/Dashboard'
+import Tasks from './pages/Tasks';
+import Leaderboard from './pages/Leaderboard';
+import ForgotPassword from './pages/ForgotPassword';
+import AuthRedirect from './components/AuthRedirect';
+import NotFound from './pages/Notfound';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import TelegramRedirect from "./pages/TelegramRedirect"
+import PhantomRedirect from './pages/PhantomRedirect';
 
 
 
@@ -31,9 +30,6 @@ const App = () => {
                     <Route path="/" element={
                         <Landing />
                     } />
-
-                    {/* A component to wake the app every 5 minute */}
-                    <Route path="/ping" element={<Ping />} />
 
 
                     {/* Protected Routes */}

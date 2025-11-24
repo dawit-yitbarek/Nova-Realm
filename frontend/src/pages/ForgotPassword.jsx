@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import LoadingSpinner from "./LoadingSpinner";
-import api from "./Api";
-import ValidateInput from "./ValidateInput";
-import Footer from "./Footer";
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
+import LoadingSpinner from "../components/LoadingSpinner";
+import api from "../components/Api";
+import ValidateInput from "../components/ValidateInput";
+import Footer from "../components/Footer";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -23,7 +22,7 @@ function ForgotPassword() {
       setSuccessMessage('');
       setLoading(true);
 
-      const response = await api.post(`${BackEndUrl}/send-reset-otp`, { email });
+      const response = await api.post(`/send-reset-otp`, { email });
       if (!response.data?.success) {
         setError(response.data?.message);
         return;

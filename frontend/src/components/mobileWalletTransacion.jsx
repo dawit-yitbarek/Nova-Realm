@@ -3,8 +3,6 @@ import { PublicKey, Keypair } from '@solana/web3.js';
 import checkAndRefreshToken from './CheckRegistration';
 import api from './Api';
 
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
-
 const recipient = "ABV6arHyPaFdcrXCAWT6L6BAHHwd4L1Fp6RFhr6EjXB1";
 const memo = "Stake your solana.";
 const label = "Stake your solana token to get more reward.";
@@ -28,7 +26,7 @@ const SolanaInvestmentMobile = (props) => {
     setErrorId(props.taskId)
     setStatus('Verifying...');
     setButtonState('processing');
-    tryVerify(0); // Start with 0 retries
+    tryVerify(0);
   };
 
   const tryVerify = async (retryCount) => {
@@ -37,7 +35,7 @@ const SolanaInvestmentMobile = (props) => {
       const token = localStorage.getItem("accessToken");
 
       const res = await api.post(
-        `${BackEndUrl}/verify-transaction`,
+        `/verify-transaction`,
         {
           reference,
           amount: props.amount,
@@ -57,7 +55,7 @@ const SolanaInvestmentMobile = (props) => {
         setStatus(`Retrying... (${nextRetry}/3)`);
         setTimeout(() => tryVerify(nextRetry), 10000);
       } else {
-        setStatus( err.response?.data?.message ||'❌ Transaction Failed');
+        setStatus(err.response?.data?.message || '❌ Transaction Failed');
         setButtonState('stake');
         props.refresh()
       }

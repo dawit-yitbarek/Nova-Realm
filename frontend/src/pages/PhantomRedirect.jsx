@@ -2,10 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import nacl from "tweetnacl";
 import bs58 from "bs58";
-import api from "./Api";
-import { useWalletError } from "./WalletErrorContext";
-
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
+import api from "../components/Api";
 
 const PhantomRedirect = () => {
   const navigate = useNavigate();
@@ -53,7 +50,7 @@ const PhantomRedirect = () => {
         const walletAddress = payload.public_key;
 
         const token = localStorage.getItem("accessToken");
-        const response = await api.post(`${BackEndUrl}/connect-wallet`, {
+        const response = await api.post(`/connect-wallet`, {
           address: walletAddress,
           walletName: "Phantom",
         }, {

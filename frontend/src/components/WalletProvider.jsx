@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useContext } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
@@ -8,11 +8,9 @@ import api from "./Api";
 import { WalletErrorContext } from "./WalletErrorContext";
 import checkAndRefreshToken from "./CheckRegistration";
 import CheckDevice from "./mobileOrDesktop";
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 
-
-// This component will handle the wallet context and the wallet address display
+// handle the wallet context and the wallet address display
 const WalletContextConsumer = ({ children }) => {
   const [error, setError] = useState(null);
 
@@ -22,7 +20,7 @@ const WalletContextConsumer = ({ children }) => {
     try {
       await checkAndRefreshToken()
       const accessToken = localStorage.getItem("accessToken");
-      await api.post(`${BackEndUrl}/disconnect-wallet`, {}, { headers: { Authorization: `Bearer ${accessToken}`, }, });
+      await api.post(`/disconnect-wallet`, {}, { headers: { Authorization: `Bearer ${accessToken}`, }, });
       await disconnect();
     } catch (error) {
       console.log(error);
@@ -41,7 +39,7 @@ const WalletContextConsumer = ({ children }) => {
           try {
             await checkAndRefreshToken();
             const accessToken = localStorage.getItem("accessToken");
-            const response = await api.post(`${BackEndUrl}/connect-wallet`, {
+            const response = await api.post(`/connect-wallet`, {
               address: walletAddress,
               walletName: name,
             }, {

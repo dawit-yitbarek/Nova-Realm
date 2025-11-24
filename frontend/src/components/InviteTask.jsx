@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { referralTasksPlaceholder } from './PlaceholderProvider';
-const FrontEndUrl = import.meta.env.VITE_FRONTEND_URL;
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 import api from './Api';
+const FrontEndUrl = import.meta.env.VITE_FRONTEND_URL;
 
 const InviteFriendSection = () => {
     const [referralCode, setRefferalCode] = useState("");
@@ -17,7 +16,7 @@ const InviteFriendSection = () => {
         const fetchTasks = async () => {
             try {
                 const accessToken = localStorage.getItem("accessToken");
-                const response = await api.get(`${BackEndUrl}/referral-tasks`, { headers: { Authorization: `Bearer ${accessToken}`, }, });
+                const response = await api.get(`/referral-tasks`, { headers: { Authorization: `Bearer ${accessToken}`, }, });
                 if (response.data.success) {
                     setCompletedTasks(response.data?.completedTasks || []);
                     setIncompleteTasks(response.data?.incompleteTasks || []);

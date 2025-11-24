@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { RefreshCw, Copy, LogOut } from "lucide-react";
-import StreakCard from "./StreakCard";
+import StreakCard from "../components/StreakCard";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { useWalletError } from "./WalletErrorContext";
-import Header from "./Header";
-import Footer from "./Footer";
-import api from "./Api";
-import { LogoutBtn } from "./Header";
-import LoadingSpinner from "./LoadingSpinner";
-import CheckDevice from "./mobileOrDesktop";
-import MobileConnectButton from "./mobileWalletConnect";
-import checkAndRefreshToken from "./CheckRegistration";
-import { dashboardPlaceholder } from "./PlaceholderProvider";
+import { useWalletError } from "../components/WalletErrorContext";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import api from "../components/Api";
+import { LogoutBtn } from "../components/Header";
+import LoadingSpinner from "../components/LoadingSpinner";
+import CheckDevice from "../components/mobileOrDesktop";
+import MobileConnectButton from "../components/mobileWalletConnect";
+import checkAndRefreshToken from "../components/CheckRegistration";
+import { dashboardPlaceholder } from "../components/PlaceholderProvider";
 
-const BackendUrl = import.meta.env.VITE_BACKEND_URL;
 const FrontendUrl = import.meta.env.VITE_FRONTEND_URL;
 
 const Dashboard = () => {
@@ -36,7 +35,7 @@ const Dashboard = () => {
   const { error } = useWalletError();
   const [walletError, setWalletError] = useState()
 
-  
+
   useEffect(() => {
     (async () => {
       const device = await CheckDevice();
@@ -50,7 +49,7 @@ const Dashboard = () => {
         setConnected(wallet.connected);
       }
     })();
-  }, [wallet.connected, wallet.publicKey]);  
+  }, [wallet.connected, wallet.publicKey]);
 
   useEffect(() => {
     setWalletError(location.state?.walletError)
@@ -60,10 +59,10 @@ const Dashboard = () => {
       setIsSpinning(true);
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const referbonus = await api.get(`${BackendUrl}/get-referral-bonus`, {
+        const referbonus = await api.get(`/get-referral-bonus`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        const response = await api.get(`${BackendUrl}/dashboard`, {
+        const response = await api.get(`/dashboard`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
 
@@ -94,10 +93,10 @@ const Dashboard = () => {
     try {
       if (desktop) {
         await wallet.disconnect()
-      }else{
+      } else {
         await checkAndRefreshToken()
         const accessToken = localStorage.getItem("accessToken");
-        await api.post(`${BackendUrl}/disconnect-wallet`, {} , { headers: { Authorization: `Bearer ${accessToken}`, }, });
+        await api.post(`/disconnect-wallet`, {}, { headers: { Authorization: `Bearer ${accessToken}`, }, });
       }
     } catch (error) {
       console.error("Wallet disconnect error:", error);
@@ -105,7 +104,7 @@ const Dashboard = () => {
       setDisconnecting(false);
       setConnected(false)
       setPublicKey(null)
-      if(!desktop) setRefreshFlag((prev) => prev + 1)
+      if (!desktop) setRefreshFlag((prev) => prev + 1)
     }
   }
 
@@ -163,7 +162,7 @@ const Dashboard = () => {
                 <div className="mt-3">
                   {desktop ? <WalletMultiButton /> : <MobileConnectButton />}
                 </div>
-                {( error || walletError ) && (
+                {(error || walletError) && (
                   <p className="text-sm text-red-500 mt-2">{error || walletError}</p>
                 )}
               </>
@@ -173,7 +172,7 @@ const Dashboard = () => {
               <div className="text-left">
                 <p className="uppercase text-xs mb-1">Your Points</p>
                 <p className="text-purple-500 text-xl sm:text-2xl font-bold">
-                  { userInfo?.point.toLocaleString() }
+                  {userInfo?.point.toLocaleString()}
                 </p>
               </div>
               <div className="text-right">

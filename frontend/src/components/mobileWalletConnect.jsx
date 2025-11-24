@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import nacl from "tweetnacl";
 import bs58 from "bs58";
-import LoadingSpinner from "./LoadingSpinner";
 
 const MobileConnectButton = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +26,7 @@ const MobileConnectButton = () => {
   };
 
   return (
-   <button
+    <button
       onClick={connectViaDeepLink}
       disabled={loading}
       className={`flex items-center justify-center gap-2 px-6 py-2 font-semibold rounded-md transition-colors 

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
-import api from "./Api";
-import ValidateInput from "./ValidateInput";
-import GoogleLogin from "./GoogleLogin"
-import LoadingSpinner from "./LoadingSpinner";
+import api from "../components/Api";
+import ValidateInput from "../components/ValidateInput";
+import GoogleLogin from "../components/GoogleLogin"
+import LoadingSpinner from "../components/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from 'react-router-dom';
 const FrontEndUrl = import.meta.env.VITE_FRONTEND_URL;
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 function Register() {
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ function Register() {
     event.preventDefault();
 
     try {
-      const response = await api.post(`${BackEndUrl}/register`, { email, password, referralCode, name });
+      const response = await api.post(`/register`, { email, password, referralCode, name });
       console.log(response.data);
       if (response.data?.success) {
         setVisibleVerify(true);
@@ -104,7 +103,7 @@ function Register() {
     setLoading(true);
     event.preventDefault();
     try {
-      const response = await api.post(`${BackEndUrl}/verify-email`, { code, email, referralCode, name });
+      const response = await api.post(`/verify-email`, { code, email, referralCode, name });
       if (response.data?.success) {
         localStorage.setItem("accessToken", response.data?.accessToken);
         navigate("/");
@@ -207,7 +206,7 @@ function Register() {
 
           <p className="text-red-500 mt-4">{error}</p>
 
-          <GoogleLogin btnName="Signup with Google" referr={referralCode} disabled={loading}/>
+          <GoogleLogin btnName="Signup with Google" referr={referralCode} disabled={loading} />
 
           <p className="text-sm mt-4 text-center">
             Already have an account?{" "}
@@ -274,7 +273,7 @@ function Register() {
             </Link>
             <span className="text-gray-500">|</span>
             <Link to="/terms" className="hover:text-purple-300 transition">
-            Terms of Service
+              Terms of Service
             </Link>
           </div>
         </div>

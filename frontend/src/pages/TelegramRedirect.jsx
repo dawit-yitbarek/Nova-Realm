@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import api from "./Api";
+import api from "../components/Api";
 const FrontEndUrl = import.meta.env.VITE_FRONTEND_URL;
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 const TelegramRedirect = () => {
   useEffect(() => {
@@ -18,7 +17,7 @@ const TelegramRedirect = () => {
         try {
           const accessToken = localStorage.getItem("accessToken");
           const res = await api.post(
-            `${BackEndUrl}/connect-telegram`,
+            `/connect-telegram`,
             { telegramData: decoded },
             { headers: { Authorization: `Bearer ${accessToken}` } }
           );

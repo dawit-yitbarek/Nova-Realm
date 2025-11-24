@@ -16,8 +16,6 @@ import checkAndRefreshToken from "./CheckRegistration";
 import SolanaInvestmentMobile from "./mobileWalletTransacion"
 import { investmentTasksPlaceholder } from "./PlaceholderProvider";
 
-
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 const Rpc_Url = import.meta.env.VITE_RPC_URL;
 const connection = new Connection(Rpc_Url, "confirmed");
 const receiverAddress = "ABV6arHyPaFdcrXCAWT6L6BAHHwd4L1Fp6RFhr6EjXB1";
@@ -53,7 +51,7 @@ const SolanaInvestment = () => {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const response = await api.get(`${BackEndUrl}/investment-tasks`, {
+        const response = await api.get(`/investment-tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data.success) {
@@ -120,7 +118,7 @@ const SolanaInvestment = () => {
       const token = localStorage.getItem("accessToken");
 
       const response = await api.post(
-        `${BackEndUrl}/verify-transaction`,
+        `/verify-transaction`,
         {
           signature,
           amount,
@@ -162,7 +160,7 @@ const SolanaInvestment = () => {
         setDisconnecting(true)
         await checkAndRefreshToken()
         const accessToken = localStorage.getItem("accessToken");
-        await api.post(`${BackEndUrl}/disconnect-wallet`, {}, { headers: { Authorization: `Bearer ${accessToken}`, }, });
+        await api.post(`/disconnect-wallet`, {}, { headers: { Authorization: `Bearer ${accessToken}`, }, });
       } catch (error) {
         console.log("error on disconnecting wallet for mobile ", error)
       } finally {
@@ -236,13 +234,13 @@ const SolanaInvestment = () => {
                 )}
               </>
               :
-              <SolanaInvestmentMobile 
-              amount={task.amount_required} 
-              taskId={task.id} publicKey={publicKey} 
-              connected={connected} 
-              reward={task.reward_point} 
-              completed={isCompleted}
-              refresh={() => setRefreshFlag((prev) => prev + 1)}/>
+              <SolanaInvestmentMobile
+                amount={task.amount_required}
+                taskId={task.id} publicKey={publicKey}
+                connected={connected}
+                reward={task.reward_point}
+                completed={isCompleted}
+                refresh={() => setRefreshFlag((prev) => prev + 1)} />
             }
 
             {!connected && !isCompleted && (

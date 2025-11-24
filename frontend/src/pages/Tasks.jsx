@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import api from "./Api";
-import SolanaInvestment from "./SolanaInvestment";
+import api from "../components/Api";
+import SolanaInvestment from "../components/SolanaInvestment";
 import { useSearchParams } from 'react-router-dom';
-import TelegramConnect from "./TelegramConnect";
-import InviteFriendSection from "./InviteTask";
-import checkAndRefreshToken from "./CheckRegistration";
-import Header from "./Header";
-import Footer from "./Footer";
-import LoadingSpinner from "./LoadingSpinner"
-import { tasksPlaceholder } from "./PlaceholderProvider";
-
-
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
+import TelegramConnect from "../components/TelegramConnect";
+import InviteFriendSection from "../components/InviteTask";
+import checkAndRefreshToken from "../components/CheckRegistration";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import LoadingSpinner from "../components/LoadingSpinner"
+import { tasksPlaceholder } from "../components/PlaceholderProvider";
 
 function Tasks() {
   const [completedTasks, setCompletedTasks] = useState(tasksPlaceholder);
@@ -27,8 +24,8 @@ function Tasks() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken"); 
-        const response = await api.get(`${BackEndUrl}/user-task`, {headers: {Authorization: `Bearer ${accessToken}`,},});
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await api.get(`/user-task`, { headers: { Authorization: `Bearer ${accessToken}`, }, });
         if (response.data.success) {
           setCompletedTasks(response.data.completedTasks || []);
           setIncompletedTasks(response.data.incompleteTasks || []);
@@ -36,7 +33,7 @@ function Tasks() {
         setTgConnectError(searchParams.get('tgError'));
       } catch (error) {
         console.error("Error fetching tasks:", error);
-      }finally{
+      } finally {
         setTaskLoading(false)
       }
     };
@@ -48,8 +45,8 @@ function Tasks() {
     try {
       await checkAndRefreshToken();
       setTaskLoading(true)
-      const accessToken = localStorage.getItem("accessToken");  
-      await api.post(`${BackEndUrl}/complete-task`, { taskId, reward_point }, {headers: {Authorization: `Bearer ${accessToken}`,},});
+      const accessToken = localStorage.getItem("accessToken");
+      await api.post(`/complete-task`, { taskId, reward_point }, { headers: { Authorization: `Bearer ${accessToken}`, }, });
     } catch (error) {
       console.error("Error completing task:", error);
     } finally {
@@ -91,19 +88,19 @@ function Tasks() {
 
       {verifyComplete && task.id === currentTaskId && (
         taskLoading ? <LoadingSpinner /> :
-        (
-          <button
-            onClick={() => handleTaskCompletion(task.id, task.reward_point)}
-            disabled={isCompleted}
-            className={`mt-3 px-4 py-2 rounded text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200
+          (
+            <button
+              onClick={() => handleTaskCompletion(task.id, task.reward_point)}
+              disabled={isCompleted}
+              className={`mt-3 px-4 py-2 rounded text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200
               ${isCompleted
-                ? "bg-gray-600 cursor-not-allowed text-gray-300"
-                : "bg-teal-600 hover:bg-teal-500 border border-teal-400 text-white shadow-md hover:shadow-teal-400/30"
-              }`}
-          >
-            {isCompleted ? <>Task Completed</> : <>Verify Task Completion</>}
-          </button>
-        )
+                  ? "bg-gray-600 cursor-not-allowed text-gray-300"
+                  : "bg-teal-600 hover:bg-teal-500 border border-teal-400 text-white shadow-md hover:shadow-teal-400/30"
+                }`}
+            >
+              {isCompleted ? <>Task Completed</> : <>Verify Task Completion</>}
+            </button>
+          )
       )}
     </div>
   );
@@ -151,14 +148,14 @@ function Tasks() {
         </div>
 
 
-         {/* Invest Solana Section */}
-          <SolanaInvestment />
-        
+        {/* Invest Solana Section */}
+        <SolanaInvestment />
 
 
-        </main>
 
-        <Footer />
+      </main>
+
+      <Footer />
     </div>
   );
 }

@@ -4,8 +4,6 @@ import { Flame } from "lucide-react";
 import LoadingSpinner from "./LoadingSpinner";
 import api from "./Api";
 
-const BackendUrl = import.meta.env.VITE_BACKEND_URL;
-
 const StreakCard = (props) => {
   const [timeLeft, setTimeLeft] = useState("00:00:00");
   const [resetDate, setResetDate] = useState(null);
@@ -70,7 +68,7 @@ const StreakCard = (props) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
       const response = await api.post(
-        `${BackendUrl}/claim-daily-reward`,
+        `/claim-daily-reward`,
         {},
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
@@ -102,18 +100,17 @@ const StreakCard = (props) => {
         <p className="text-sm sm:text-md font-medium mb-6 text-center">
           {props.isClaimed
             ? "You've claimed your reward today!"
-            : `🎁 Claim today's bonus: ${ props.currentStreak < 5 ? props.currentStreak * 5 : 25 || "---" } points`}
+            : `🎁 Claim today's bonus: ${props.currentStreak < 5 ? props.currentStreak * 5 : 25 || "---"} points`}
         </p>
 
         {!loading && !props.streakLoading ? (
           <button
             onClick={claimDailyReward}
             disabled={props.isClaimed || props.streakLoading}
-            className={`w-full max-w-xs px-4 py-3 text-sm sm:text-base rounded-full font-medium transition-colors text-center ${
-              props.isClaimed
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-purple-600 hover:bg-purple-700"
-            }`}
+            className={`w-full max-w-xs px-4 py-3 text-sm sm:text-base rounded-full font-medium transition-colors text-center ${props.isClaimed
+              ? "bg-gray-500 cursor-not-allowed"
+              : "bg-purple-600 hover:bg-purple-700"
+              }`}
           >
             {props.isClaimed ? "Already Claimed Today" : "Claim Now"}
           </button>

@@ -1,19 +1,18 @@
 import api from "./Api";
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 
 const isMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-console.log("the device detector ", navigator.userAgent); 
+console.log("the device detector ", navigator.userAgent);
 
 async function CheckDevice() {
     if (isMobile()) {
         console.log("The device is mobile")
         try {
             const token = localStorage.getItem("accessToken");
-            const response = await api.get(`${BackEndUrl}/get-wallet-address`, {
+            const response = await api.get(`/get-wallet-address`, {
                 headers: {
-                  Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
-              });
+            });
             const address = response.data?.address || null;
             return {
                 desktop: false,

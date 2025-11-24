@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import api from "./Api";
-const BackEndUrl = import.meta.env.VITE_BACKEND_URL;
 const FrontEndUrl = import.meta.env.VITE_FRONTEND_URL;
 const BotId = import.meta.env.VITE_TELEGRAM_BOT_ID;
 
@@ -13,7 +12,7 @@ const TelegramConnect = (props) => {
   //   const connectTelegram = async () => {
   //     try {
   //       const accessToken = localStorage.getItem("accessToken");  
-  //       const response = await api.get(`${BackEndUrl}/get-telegramId`, {headers: {Authorization: `Bearer ${accessToken}`,},});
+  //       const response = await api.get(`/get-telegramId`, {headers: {Authorization: `Bearer ${accessToken}`,},});
   //       if (response.data.success) {
   //         setIsConnected(true);
   //         console.log("Telegram connected successfully");
@@ -29,17 +28,17 @@ const TelegramConnect = (props) => {
   //   connectTelegram();
   // }, []);
 
- 
+
 
   const handleTelegramLogin = () => {
     const redirectUri = encodeURIComponent(`${FrontEndUrl}/telegram-redirect`);
-  
+
     const url = `https://oauth.telegram.org/auth?bot_id=${BotId}&origin=${window.location.origin}&request_access=write&redirect_uri=${redirectUri}`;
-  
+
     // Open a popup with width and height
     window.location.href = url;
   };
-  
+
 
   return (
     //  !isConnected ?
@@ -56,20 +55,20 @@ const TelegramConnect = (props) => {
     //     <p className="text-red-600 p-3 text-center">{props.errorMessage}</p>
     //   </>
     //    :
-      (
-        <a
-          href={props.url}
-          onClick={props.setId}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`mt-3 px-4 py-2 rounded text-sm text-center font-medium transition ${props.isCompleted
-            ? "bg-gray-600 cursor-not-allowed flex items-center gap-1"
-            : "bg-purple-700 hover:bg-purple-600"
-            }`}
-        >
-          Go to Task →
-        </a>
-      )
+    (
+      <a
+        href={props.url}
+        onClick={props.setId}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`mt-3 px-4 py-2 rounded text-sm text-center font-medium transition ${props.isCompleted
+          ? "bg-gray-600 cursor-not-allowed flex items-center gap-1"
+          : "bg-purple-700 hover:bg-purple-600"
+          }`}
+      >
+        Go to Task →
+      </a>
+    )
   );
 };
 
