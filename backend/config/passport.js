@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import config from './index.js';
 
 export default function configurePassport() {
+    console.log(`Google callbackURL: ${config.BACKEND_URL}/auth/google/dashboard`);
     passport.use(
         'google',
         new GoogleStrategy(
